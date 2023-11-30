@@ -16,7 +16,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using static LearningConsoleApp.ConstantObjects.UrlsEnum;
+using static LearningConsoleApp.ConstantObjects.UrlsConstant;
 
 namespace LearningConsoleApp.Tools
 {
@@ -24,6 +24,7 @@ namespace LearningConsoleApp.Tools
     {
         private static ChromiumDriver driver;
         private static SeleniumActions seleniumActions;
+        private static String previousUrl = "";
 
         internal static void SetDriver(ChromiumDriver chromiumDriver) {
             driver = chromiumDriver;
@@ -35,8 +36,8 @@ namespace LearningConsoleApp.Tools
             //driver = chromiumDriver;
             //seleniumActions = new SeleniumActions(driver);
 
-            CheckingElementsEnum.CheckingElement elementsEnum =
-                (CheckingElementsEnum.CheckingElement)enumIndex;
+            StepDownloaderConstants.StepDownloader elementsEnum =
+                (StepDownloaderConstants.StepDownloader)enumIndex;
             Thread.Sleep(2000);
             for (int i = 0; i < 3; i++)
             {
@@ -45,30 +46,29 @@ namespace LearningConsoleApp.Tools
                     switch (elementsEnum)
                     {
 
-                        case CheckingElementsEnum.CheckingElement.YOUTUBE_SEARCH_VIDEO:
+                        case StepDownloaderConstants.StepDownloader.YOUTUBE_SEARCH_VIDEO:
                             Console.WriteLine("Youtube video aratılıyor..");
                             return ReturnMethod<bool>(SearchYoutubeVideo(value.ToString()));
 
-                        case CheckingElementsEnum.CheckingElement.YOUTUBE_CLICK_VIDEO:
+                        case StepDownloaderConstants.StepDownloader.YOUTUBE_CLICK_VIDEO:
                             Console.WriteLine("Youtube video tıklatılıyor..");
                             return ReturnMethod<bool>(ClickYoutubeVideo(value.ToString()));
 
-                        case CheckingElementsEnum.CheckingElement.MP3_SEARCH_VIDEO:
+                        case StepDownloaderConstants.StepDownloader.MP3_SEARCH_VIDEO:
                             Console.WriteLine("Mp3 video aratılıyor..");
                             return ReturnMethod<bool>(SearchMp3Video(value.ToString()));
 
-                        case CheckingElementsEnum.CheckingElement.MP3_DOWNLOAD_VIDEO_ROAD1:
+                        case StepDownloaderConstants.StepDownloader.MP3_DOWNLOAD_VIDEO_ROAD1:
                             Console.WriteLine("MP3 videolardan bulunuyor..");
                             return ReturnMethod<bool>(DownloadMp3Video_Road1());
 
-                        case CheckingElementsEnum.CheckingElement.MP3_DOWNLOAD_VIDEO_ROAD2:
+                        case StepDownloaderConstants.StepDownloader.MP3_DOWNLOAD_VIDEO_ROAD2:
                             Console.WriteLine("MP3 Audio sekmesinden indire tıklatılıyor..");
                             return ReturnMethod<bool>(DownloadMp3Video_Road2());
 
-                        case CheckingElementsEnum.CheckingElement.MP3_DOWNLOAD_VIDEO_ROAD3:
+                        case StepDownloaderConstants.StepDownloader.MP3_DOWNLOAD_VIDEO_ROAD3:
                             Console.WriteLine("Gelen popupta indir tuşuna basılıyor..");
                             return ReturnMethod<bool>(DownloadMp3Video_Road3());
-
 
                         default:
                             return ReturnMethod<bool>(false);
@@ -114,6 +114,7 @@ namespace LearningConsoleApp.Tools
 
         private static bool ClickYoutubeVideo(String musicName)
         {
+            previousUrl = driver.Url;
             String query = @" 
                 var musicName = '" + musicName + @"'
 
@@ -134,9 +135,10 @@ namespace LearningConsoleApp.Tools
                 } catch (e) {}
 
             ";
-
+            
             seleniumActions.ExecuteJS(query, null, false);
-
+            Thread.Sleep(500);
+            if (previousUrl.Equals(driver.Url)) return false;
             return true;
         }
 

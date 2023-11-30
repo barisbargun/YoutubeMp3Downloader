@@ -54,6 +54,8 @@ namespace LearningConsoleApp.Tools
 
         private static void SearchFiles(string folderPath, string searchPattern)
         {
+            // folderPath = klasörün yeri
+            // searchPattern aranacak dosyanın uzantısı *.txt, *.mp3
             files = Directory.GetFiles(folderPath, searchPattern);
 
             foreach (var path in files)
@@ -68,5 +70,7 @@ namespace LearningConsoleApp.Tools
                 }  
             }
         }
+
+
     }
 }

@@ -97,32 +97,5 @@ namespace LearningConsoleApp.Tools
             }
         }
 
-        public R_Type ReturnTypeExecuteJS<R_Type>(String musicName)
-        {
-            var a = javaScript.ExecuteScript(@" 
-                var musicName = " + musicName + @"
-
-                var a = [...document.querySelectorAll('#video-title yt-formatted-string')].slice(0, 5);
-
-                try{
-                a.forEach(function myFunction(item){ 
-                musicName.split(' ').forEach(function myFunc(txt){
-	                if(item.textContent.includes(txt)) {
-                        item.click()
-                    throw BreakException
-                }
-
-                })
-
-
-                })
-                }catch(e) {
-
-                }
-
-            ");
-            return (R_Type)a;
-        }
-
     }
 }

@@ -12,14 +12,14 @@ namespace LearningConsoleApp.Tools
 
         internal static string GetUrl(int enumIndex)
         {
-            UrlsEnum.Url urlsEnum = (UrlsEnum.Url)enumIndex;
+            UrlsConstant.Url urlsEnum = (UrlsConstant.Url)enumIndex;
             switch (urlsEnum)
             {
-                case UrlsEnum.Url.EDGEDRIVER:
-                    return "\"C:\\Program Files (x86)\\Microsoft\\Edge\\msedgedriver.exe\"";
-                case UrlsEnum.Url.YOUTUBE:
+                case UrlsConstant.Url.EDGEDRIVER:
+                    return "C:\\Program Files (x86)\\Microsoft\\Edge\\msedgedriver.exe";
+                case UrlsConstant.Url.YOUTUBE:
                     return "https://www.youtube.com/";
-                case UrlsEnum.Url.MP3_DOWNLOADER:
+                case UrlsConstant.Url.MP3_DOWNLOADER:
                     return "https://www.y2mate.com/youtube/bfCudD2OG0w";
                 default:
                     return "";

@@ -41,7 +41,7 @@ namespace LearningConsoleApp
             // If you'd like to change to chrome driver,
             // change options to ChromeOptions, change EdgeDriver to ChromeDriver
             driver = new EdgeDriver(
-                "C:/Program Files (x86)/Microsoft/Edge/msedgedriver.exe", options);
+                UrlsEnumConverter.GetUrl((int)UrlsConstant.Url.EDGEDRIVER), options);
 
             openingYoutube = new OpeningYoutube(driver);
             mp3Downloader = new OpeningMp3Downloader(driver);
@@ -52,9 +52,10 @@ namespace LearningConsoleApp
 
         public void RunApp()
         {
+
             Console.Write("Dosyadan(0) mı müzikleriniz alınsın yoksa\nkendiniz(1) mi yazmak istersiniz: ");
             string WhichWayMusicTaken = Console.ReadLine();
-
+            
             if (WhichWayMusicTaken != null)
             {
                 if (WhichWayMusicTaken.Trim().Equals("1"))
@@ -120,11 +121,11 @@ namespace LearningConsoleApp
         private void OpenTabs()
         {
             seleniumActions.OpenNewTab(
-                    UrlsEnumConverter.GetUrl((int)UrlsEnum.Url.YOUTUBE));
+                    UrlsEnumConverter.GetUrl((int)UrlsConstant.Url.YOUTUBE));
             Thread.Sleep(200);
 
             seleniumActions.OpenNewTab(
-                UrlsEnumConverter.GetUrl((int)UrlsEnum.Url.MP3_DOWNLOADER));
+                UrlsEnumConverter.GetUrl((int)UrlsConstant.Url.MP3_DOWNLOADER));
             Thread.Sleep(200);
 
             seleniumActions.SwitchTab(0);
@@ -147,8 +148,71 @@ namespace LearningConsoleApp
                 else Console.Out.WriteLine(($"İndirilemedi: {musicName}"));
 
             }
+            else {
+                Console.WriteLine("Video bulunamadı..");
+                Console.WriteLine("İsmi düzgün yazdığınızdan emin olun.");
+            }
+
         }
     }
+
+
+
+
+    //class PeopleEnum<T> : IEnumerator<T>
+    //{
+
+    //    private List<T> people = new List<T>();
+    //    private int position = -1;
+
+    //    Object IEnumerator.Current
+    //    {
+    //        get
+    //        {
+    //            return Current;
+    //        }
+    //    }
+
+    //    public T Current
+    //    {
+    //        get
+    //        {
+    //            try
+    //            {
+    //                return people[position];
+    //            }
+    //            catch (IndexOutOfRangeException)
+    //            {
+
+    //                throw new IndexOutOfRangeException("An error happened");
+    //            }
+    //        }
+    //    }
+
+    //    public PeopleEnum(List<T> things)
+    //    {
+    //        this.people = things;
+    //    }
+
+    //    public bool MoveNext()
+    //    {
+    //        position++;
+    //        return (position < people.Count);
+    //    }
+
+    //    public void Reset()
+    //    {
+    //        position = -1;
+    //    }
+
+    //    public void Dispose()
+    //    {
+    //        people.Clear();
+    //        position = -1;
+    //    }
+    //}
+
+
 
 
 }
